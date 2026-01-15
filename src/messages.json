@@ -1,0 +1,17 @@
+[
+    {
+        "sender": "User123",
+        "content": "Hey, how are you doing today?",
+        "received": "10 minutes ago"
+    },
+    {
+        "sender": "Dark-bloomer",
+        "content": "Grow in dark, bloom in light.",
+        "received": "4 hours ago"
+    },
+    {
+        "sender": "Scorpio",
+        "content": "Do you have any information about his job?",
+        "received": "1 day ago"
+    }
+]
