@@ -5,6 +5,7 @@ import { User } from "next-auth";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
+import DonateAdv from "@/components/DonateAdv";
 
 export default function NavBar() {
     const { data: session, status } = useSession();
@@ -13,6 +14,7 @@ export default function NavBar() {
     return <nav className="p-4 md:p-6 shadow-md">
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
             <a className="text-xl mb-4 md:mb-0" href="#">Mystery Message</a>
+            <DonateAdv />
             {
                 session
                     ? <>
