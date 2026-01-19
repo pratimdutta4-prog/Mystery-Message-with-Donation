@@ -37,6 +37,7 @@ export interface IPaymentDetails extends Document {
     paidAmount: number;
     dueAmount: number;
     currency: string;
+    stripePaymentIntentId?: string;
     purpose?: string;
     metadata?: Record<string, any>;
 
@@ -99,32 +100,28 @@ const PaymentDetailsSchema = new Schema<IPaymentDetails>(
         currency: {
             type: String,
             required: [true, 'Currency is required in Payment Details.'],
-            default: 'inr'
+            uppercase: true,
+            default: 'INR'
+        },
+        stripePaymentIntentId: {
+            type: String
         },
         purpose: {
             type: String,
             maxLength: [150, `Payment purpose can't exceed 150 charecters.`]
         },
         metadata: {
-            type: Schema.Types.Mixed
+            type: Schema.Types.Mixed,
+            default: {}
         }
     },
     {
         timestamps: true,
-        toJSON: { virtuals: true },
-        toObject: { virtuals: true }
     }
 );
 
 PaymentDetailsSchema.index({ payer_id: 1 });
-
-/*PaymentDetailsSchema.index({ payer_id: 1, status: 1 });
-PaymentDetailsSchema.index({ status: 1, type: 1 });
-PaymentDetailsSchema.index({ status: 1, createdAt: -1 });*/
-
-PaymentDetailsSchema.virtual('isPaid').get(function () {
-    return this.status === 'PAID';
-});
+PaymentDetailsSchema.index({ status: 1 });
 
 const PaymentDetailsModel = mongoose.models.PaymentDetails as mongoose.Model<IPaymentDetails> ||
     mongoose.model<IPaymentDetails>('PaymentDetails', PaymentDetailsSchema);

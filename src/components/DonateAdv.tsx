@@ -246,13 +246,14 @@ export default function DonateAdv() {
       {
         step === 'step2' && (
           <UnregisteredUserCheckoutButton
+            receiver='mysteryMsg'
             amount={amount}
             currency="inr"
             type="ONE_TIME"
             purpose="donation for plant"
-            formTitle="Donar Details"
+            formTitle="Payment Methods"
             extradata={{
-              closeParentDialog: () => setStep(null),
+              closeParentDialog: () => handleCloseThisDialog(),
               goBack: () => {
                 setStep('step1');
                 handleSetDefaultThis();

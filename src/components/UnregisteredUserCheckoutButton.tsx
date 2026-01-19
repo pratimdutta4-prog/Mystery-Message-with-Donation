@@ -9,6 +9,7 @@ import { Spinner } from "./ui/shadcn-io/spinner";
 import axios, { AxiosError } from "axios";
 
 export default function UnregisteredUserCheckoutButton({
+  receiver,
   amount,
   currency,
   type,
@@ -17,6 +18,7 @@ export default function UnregisteredUserCheckoutButton({
   metadata,
   extradata
 }: {
+  receiver: string,
   amount: number,
   currency: 'inr',
   type: PaymentType,
@@ -65,11 +67,12 @@ export default function UnregisteredUserCheckoutButton({
 
     try {
       const { data } = await axios.post(
-        '/api/stripe-payment/unregistered-user/checkout-intent',
+        '/api/stripe-payment/checkout-intent/unregistered-user',
         {
           name,
           email,
           phone,
+          receiver,
           amount,
           currency,
           type,
@@ -95,9 +98,6 @@ export default function UnregisteredUserCheckoutButton({
 
   return (
     <>
-
-
-
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
         <div className="w-full max-w-md rounded-xl bg-white shadow-xl animate-in fade-in zoom-in-95">
 
@@ -192,7 +192,7 @@ export default function UnregisteredUserCheckoutButton({
                             Processing <Spinner variant="ellipsis" />
                           </span>
                         ) : (
-                          `Pay ₹${amount}`
+                          `Continue to Pay ₹${amount}`
                         )}
                       </button>
                     </div>

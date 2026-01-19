@@ -16,8 +16,8 @@ const PayerSchema = new Schema<IPayer>(
             type: String,
             trim: true,
             required: [true, 'Payer name is required.'],
-            minLength: [2, 'Name should be atleast 2 charecters.'],
-            maxLength: [50, `Name can't exceed 50 charecters.`]
+            minLength: [2, 'Name should be at least 2 characters.'],
+            maxLength: [50, `Name can't exceed 50 characters.`]
         },
         email: {
             type: String,
@@ -41,25 +41,12 @@ const PayerSchema = new Schema<IPayer>(
             type: String,
             required: true,
             unique: true,
-            sparce: true
         },
     },
     {
         timestamps: true,    // for auto adds --> createdAt and updatedAt
-        toJSON: {
-            virtuals: true,
-            transform(_: any, ret: any) {
-                ret.id = ret._id;
-                delete ret._id;
-                delete ret.__v;
-            }
-        }
     }
 );
-
-PayerSchema.index({ stripeCustomerId: 1 }, { unique: true });
-PayerSchema.index({ email: 1 }, { unique: true });
-PayerSchema.index({ phone: 1 }, { unique: true });
 
 const PayerModel = mongoose.models.Payer as mongoose.Model<IPayer> ||
     mongoose.model<IPayer>('Payer', PayerSchema);

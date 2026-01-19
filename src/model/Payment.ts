@@ -6,7 +6,6 @@ export interface IPayment extends Document {
     paymentDetails_id: mongoose.Types.ObjectId;
     status: PaymentStatus;
     amount: number;
-    stripePaymentIntentId?: string;
     stripeInvoiceId?: string;
     stripeChargeId?: string;
     receiptUrl?: string;
@@ -33,9 +32,6 @@ const PaymentSchema = new Schema<IPayment>(
             type: Number,
             required: true
         },
-        stripePaymentIntentId: {
-            type: String
-        },
         stripeInvoiceId: {
             type: String
         },
@@ -53,6 +49,8 @@ const PaymentSchema = new Schema<IPayment>(
         timestamps: true
     }
 );
+
+PaymentSchema.index({ paymentDetails_id: 1 });
 
 const PaymentModel = mongoose.models.Payment as mongoose.Model<IPayment> ||
     mongoose.model<IPayment>('payment', PaymentSchema);

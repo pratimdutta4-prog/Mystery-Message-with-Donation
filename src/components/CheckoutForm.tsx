@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/shadcn-io/spinner";
 
-function PaymentForm({ amount }: { amount: number }) {
+function PaymentForm({ amount}:{amount: number}) {
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -53,8 +53,12 @@ function PaymentForm({ amount }: { amount: number }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <PaymentElement />
+        <form onSubmit={handleSubmit} className="space-y-4 max-h-[75vh] overflow-y-auto pr-2">
+            <PaymentElement 
+            /*options={{
+                layout: "tabs"
+            }}*/
+            />
             {
                 errorMessage && <p className="text-sm text-red-600">{errorMessage}</p>
             }
@@ -67,7 +71,7 @@ function PaymentForm({ amount }: { amount: number }) {
                         ? <>
                             <Spinner variant="circle" />Processing...
                         </>
-                        : `Pay Now ₹${amount}`
+                        : `Pay ₹${amount} Now`
                 }
             </Button>
         </form>
